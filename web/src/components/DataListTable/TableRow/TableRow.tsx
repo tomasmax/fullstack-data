@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { Data } from "../DataListTable";
+import { Data } from "../config";
 
 const TableRow = ({
   id,

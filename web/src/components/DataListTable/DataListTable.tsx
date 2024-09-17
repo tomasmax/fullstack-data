@@ -1,55 +1,17 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./DataListTable.css";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
+import { Data, SORT_ORDER, SortField, SortOrder } from "./config";
 
-export interface Data {
-  id: number;
-  status: string;
-  createdOn?: Date;
-  name: string;
-  description?: string;
-  delta?: number | string;
-}
-
-interface Props {
+interface DataListTableProps {
   data: Data[];
-  statusFilter: string;
-  nameFilter: string;
-  onStatusFilterChange: (status: string) => void;
-  onNameFilterChange: (name: string) => void;
 }
-export type SortOrder = "asc" | "desc";
-export type SortField = keyof Data | null;
-
 const BASE_CLASS = "dataListTable";
-const SORT_ORDER: { ASC: SortOrder; DESC: SortOrder } = {
-  ASC: "asc",
-  DESC: "desc",
-};
 
-const DataListTable = ({
-  data,
-  statusFilter,
-  nameFilter,
-  onStatusFilterChange,
-  onNameFilterChange,
-}: Props) => {
+const DataListTable = ({ data }: DataListTableProps) => {
   const [sortField, setSortField] = useState<SortField>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SORT_ORDER.ASC);
-
-  const handleStatusFilterChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    onStatusFilterChange(event.target.value);
-  };
-
-  const handleNameFilterChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onNameFilterChange(event.target.value);
-    },
-    [onNameFilterChange]
-  );
 
   const handleSorting = (field: SortField) => {
     const order =
@@ -76,32 +38,6 @@ const DataListTable = ({
 
   return (
     <div className={BASE_CLASS}>
-      <section className={`${BASE_CLASS}-filters`}>
-        <div className={`${BASE_CLASS}-filter`}>
-          <label htmlFor="nameFilter">Filter by name:</label>
-          <input
-            id="nameFilter"
-            value={nameFilter}
-            type="text"
-            placeholder="Type search keyword"
-            onChange={(e) => handleNameFilterChange(e)}
-          />
-        </div>
-        <div className={`${BASE_CLASS}-filter`}>
-          <label htmlFor="statusFilter">Status Filter:</label>
-          <select
-            id="statusFilter"
-            value={statusFilter}
-            onChange={handleStatusFilterChange}
-          >
-            <option value=""></option>
-            <option value="COMPLETED">Completed</option>
-            <option value="ERROR">Error</option>
-            <option value="CANCELED">Canceled</option>
-          </select>
-        </div>
-      </section>
-
       <table className={`${BASE_CLASS}-table`}>
         <TableHeader
           onSort={handleSorting}

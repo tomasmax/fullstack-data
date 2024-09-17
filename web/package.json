@@ -1,5 +1,5 @@
 {
-  "name": "react-ts",
+  "name": "react-ts-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest",
-    "test:watch": "jest --watchAll --runInBand --forceExit --detectOpenHandles",
-    "test:coverage": "jest --silent --watchAll=false --coverage"
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "axios": "^1.7.7",

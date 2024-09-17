@@ -5,7 +5,6 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   itemsPerPage: number;
-  totalItems: number;
   onPageChange: (newPage: number) => void;
   onItemsPerPageChange: (newItemsPerPage: number) => void;
 }
@@ -18,7 +17,6 @@ export const Pagination = ({
   currentPage,
   totalPages,
   itemsPerPage,
-  totalItems,
   onPageChange,
   onItemsPerPageChange,
 }: PaginationProps) => {

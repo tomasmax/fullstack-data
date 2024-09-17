@@ -7,33 +7,6 @@
   overflow-x: auto;
 }
 
-.dataListTable-filters {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--margin-medium);
-  gap: var(--gap-medium);
-  flex-wrap: wrap;
-}
-
-.dataListTable-filter label {
-  margin-right: var(--margin-small);
-  font-weight: bold;
-}
-
-.dataListTable-filter input,
-.dataListTable-filter select {
-  padding: var(--padding-small);
-  border: 1px solid var(--primary-color);
-  border-radius: var(--border-radius);
-  font-size: 14px;
-}
-
-.dataListTable-filter input:focus,
-.dataListTable-filter select:focus {
-  border-color: var(--primary-color);
-  outline: none;
-}
-
 .dataListTable table {
   width: 100%;
   border-collapse: separate;
@@ -53,15 +26,32 @@
 .dataListTable th {
   background-color: var(--primary-darker);
   font-weight: bold;
+  position: relative;
+}
+
+.dataListTable .th-header {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.dataListTable th.sorted-asc::after {
-  content: " ▲";
+.dataListTable .sort-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5px;
 }
 
-.dataListTable th.sorted-desc::after {
-  content: " ▼";
+.dataListTable .arrow {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 0.8em;
+  color: var(--hover-bg-color);
+}
+
+.dataListTable .arrow.active {
+  color: white;
 }
 
 .dataListTable tr:nth-child(even) {
@@ -95,10 +85,5 @@
   .dataListTable td {
     padding: var(--padding-small);
     font-size: 12px;
-  }
-
-  .dataListTable-filters {
-    flex-direction: column;
-    align-items: stretch;
   }
 }
