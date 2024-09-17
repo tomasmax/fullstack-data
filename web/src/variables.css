@@ -1,0 +1,15 @@
+:root {
+  --primary-color: #121315;
+  --primary-darker: #171414;
+  --primary-light: #ddd;
+  --even-row-bg-color: #1b1a1a;
+  --hover-bg-color: #626060;
+  --disabled-color: #7a7a7a;
+  --padding-small: 8px;
+  --padding-medium: 16px;
+  --margin-small: 8px;
+  --margin-medium: 16px;
+  --border-radius: 8px;
+  --gap-small: 8px;
+  --gap-medium: 16px;
+}
