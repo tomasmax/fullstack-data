@@ -1,7 +1,14 @@
 import React from "react";
-import { SORT_ORDER, SortField, SortOrder } from "../config";
+import {
+  Header,
+  DEFAULT_HEADERS,
+  SORT_ORDER,
+  SortField,
+  SortOrder,
+} from "../config";
 
 interface TableHeaderProps {
+  headers: Header[];
   onSort: (field: SortField) => void;
   sortField: SortField;
   sortOrder: SortOrder;
@@ -32,38 +39,26 @@ const SortArrows = ({ field, sortField, sortOrder }: SortArrowsProps) => {
   );
 };
 
-const TableHeader = ({ onSort, sortField, sortOrder }: TableHeaderProps) => (
+const TableHeader = ({
+  headers = DEFAULT_HEADERS,
+  onSort,
+  sortField,
+  sortOrder,
+}: TableHeaderProps) => (
   <thead>
     <tr>
-      <th onClick={() => onSort("id")}>
-        <div className="th-header">
-          ID
-          <SortArrows field="id" sortField={sortField} sortOrder={sortOrder} />
-        </div>
-      </th>
-      <th onClick={() => onSort("name")}>
-        <div className="th-header">
-          Name
-          <SortArrows
-            field="name"
-            sortField={sortField}
-            sortOrder={sortOrder}
-          />
-        </div>
-      </th>
-      <th>Status</th>
-      <th>Description</th>
-      <th>Delta</th>
-      <th onClick={() => onSort("createdOn")}>
-        <div className="th-header">
-          Created On
-          <SortArrows
-            field="createdOn"
-            sortField={sortField}
-            sortOrder={sortOrder}
-          />
-        </div>
-      </th>
+      {headers.map((header) => (
+        <th key={header} onClick={() => onSort(header)}>
+          <div className="th-header">
+            {header}
+            <SortArrows
+              field={header}
+              sortField={sortField}
+              sortOrder={sortOrder}
+            />
+          </div>
+        </th>
+      ))}
     </tr>
   </thead>
 );
