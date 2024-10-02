@@ -16,16 +16,14 @@ const SortArrows = ({ field, sortField, sortOrder }: SortArrowsProps) => {
     <span className="sort-arrows">
       <span
         className={`arrow ${
-          sortField === field && sortOrder === SORT_ORDER.ASC ? "COMPLETED" : ""
+          sortField === field && sortOrder === SORT_ORDER.ASC ? "active" : ""
         }`}
       >
         ▲
       </span>
       <span
         className={`arrow ${
-          sortField === field && sortOrder === SORT_ORDER.DESC
-            ? "COMPLETED"
-            : ""
+          sortField === field && sortOrder === SORT_ORDER.DESC ? "active" : ""
         }`}
       >
         ▼
