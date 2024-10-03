@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import DataListTable, {
-  Data,
-} from "../../components/DataListTable/DataListTable";
-import axios from "axios";
+import DataListTable from "../../components/DataListTable/DataListTable";
 import Pagination from "../../components/Pagination/Pagination";
 import { useDebounce } from "use-debounce";
 import Filters from "../../components/Filters/Filters";
+import type { Data } from "../../types/data";
+import { fetchData, FetchDataParams } from "../../services/data.service";
+import type { PaginatedDataResponse } from "../../types/paginatedDataResponse";
 
 const INPUT_DEBOUNCE_TIME = 300;
 
@@ -20,23 +20,24 @@ function PaginatedTableContainer() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(
-    async (page: number, status: string, name: string, limit: number) => {
+  const [debouncedNameFilter] = useDebounce(nameFilter, INPUT_DEBOUNCE_TIME);
+
+  const getData = useCallback(
+    async ({ page, status, name, limit }: FetchDataParams) => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get("http://localhost:3000/data", {
-          params: {
-            ...(status && { status }),
-            ...(name && { search: name }),
-            ...(limit && { limit }),
-            page,
-          },
+        const response: PaginatedDataResponse = await fetchData({
+          status,
+          name,
+          limit,
+          page,
         });
-        setData(response.data.data);
-        setTotalItems(response.data.totalItems);
-        setTotalPages(response.data.totalPages);
-        setCurrentPage(response.data.currentPage);
+
+        setData(response.data);
+        setTotalItems(response.totalItems);
+        setTotalPages(response.totalPages);
+        setCurrentPage(response.currentPage);
       } catch (err) {
         setError("Failed to fetch data. Please try again.");
         console.error(err);
@@ -47,11 +48,14 @@ function PaginatedTableContainer() {
     []
   );
 
-  const [debouncedNameFilter] = useDebounce(nameFilter, INPUT_DEBOUNCE_TIME);
-
   useEffect(() => {
-    fetchData(currentPage, statusFilter, debouncedNameFilter, itemsPerPage);
-  }, [currentPage, statusFilter, debouncedNameFilter, fetchData, itemsPerPage]);
+    getData({
+      page: currentPage,
+      status: statusFilter,
+      name: debouncedNameFilter,
+      limit: itemsPerPage,
+    });
+  }, [currentPage, statusFilter, debouncedNameFilter, itemsPerPage, getData]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);

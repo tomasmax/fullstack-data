@@ -8,7 +8,7 @@ import {
 } from "../config";
 
 interface TableHeaderProps {
-  headers: Header[];
+  headers?: Header[];
   onSort: (field: SortField) => void;
   sortField: SortField;
   sortOrder: SortOrder;

@@ -1,11 +1,4 @@
-export interface Data {
-  id: number;
-  status: string;
-  createdOn?: Date;
-  name: string;
-  description?: string;
-  delta?: number | string;
-}
+import { Data } from "../../types/data";
 
 export type SortOrder = "asc" | "desc";
 export type Header = keyof Data;

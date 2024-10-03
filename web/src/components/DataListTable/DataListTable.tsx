@@ -2,7 +2,8 @@ import React, { useMemo, useState } from "react";
 import "./DataListTable.css";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRow from "./TableRow/TableRow";
-import { Data, SORT_ORDER, SortField, SortOrder } from "./config";
+import { SORT_ORDER, SortField, SortOrder } from "./config";
+import type { Data } from "../../types/data";
 
 interface DataListTableProps {
   data: Data[];
