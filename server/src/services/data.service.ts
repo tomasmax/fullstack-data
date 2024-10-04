@@ -6,7 +6,7 @@ import CacheService from './cache.service'
 import stringify from 'json-stable-stringify'
 import { mapDataListApiResponseToDataListModel } from '@/mappers/data.mapper'
 
-export const DATA_URL = 'https://storage.googleapis.com/king-airnd-recruitment-sandbox-data/data.json'
+export const DATA_URL = 'https://amock.io/api/tomasmax/data'
 
 class DataService {
   private cache: CacheService
