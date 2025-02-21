@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import "./Filters.css";
 
 const BASE_CLASS = "filters";
@@ -58,7 +58,7 @@ const Filters = ({
           </select>
         </div>
       </div>
-      {totalItems && (
+      {Boolean(totalItems) && (
         <p className={`${BASE_CLASS}-total`}>Total Items: {totalItems}</p>
       )}
     </section>
