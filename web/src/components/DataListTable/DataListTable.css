@@ -50,7 +50,7 @@
 }
 
 .dataListTable .arrow.active {
-  color: white;
+  color: var(--primary-light);
 }
 
 .dataListTable tr:nth-child(even) {

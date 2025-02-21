@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataListTable from "../../components/DataListTable/DataListTable";
 import Pagination from "../../components/Pagination/Pagination";
 import { useDebounce } from "use-debounce";
@@ -37,7 +37,6 @@ function PaginatedTableContainer() {
         setData(response.data);
         setTotalItems(response.totalItems);
         setTotalPages(response.totalPages);
-        setCurrentPage(response.currentPage);
       } catch (err) {
         setError("Failed to fetch data. Please try again.");
         console.error(err);
