@@ -1,9 +1,6 @@
-@import "../../variables.css";
-
 .dataListTable {
   width: 100%;
   margin: var(--margin-medium) 0;
-  font-family: Arial, sans-serif;
   overflow-x: auto;
 }
 
@@ -21,6 +18,7 @@
   padding: var(--padding-medium);
   border: 1px solid var(--primary-light);
   text-align: left;
+  color: var(--primary-light);
 }
 
 .dataListTable th {

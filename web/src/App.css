@@ -25,7 +25,24 @@
 }
 
 .App-header {
-  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-medium);
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.themeToggleButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
 }
 
 @keyframes logo-spin {
