@@ -5,7 +5,7 @@
   "author": "Tomas Madariaga - tomasmax",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && NODE_ENV=production ts-node -r tsconfig-paths/register --transpile-only dist/server.js",
+    "start": "npm run build && NODE_ENV=production ORIGIN=http://localhost:4173 ts-node -r tsconfig-paths/register --transpile-only dist/server.js",
     "dev": "NODE_ENV=development PORT=3000 ORIGIN=http://localhost:5173 nodemon",
     "debug": "NODE_ENV=development nodemon --exec \"node --inspect-brk=0.0.0.0:9229 --require ts-node/register src/server.ts\"",
     "test": "jest --verbose --runInBand",
