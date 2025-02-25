@@ -1,41 +1,41 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import axios from "axios";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import PaginatedTableContainer from "../PaginatedTableContainer";
 import "@testing-library/jest-dom";
+import useFetch from "../../../hooks/useFetch";
 
-// Mock axios
-vi.mock("axios");
+// Mock useFetch
+vi.mock("../../../hooks/useFetch");
 
 describe("PaginatedTableContainer", () => {
   const mockData = {
-    data: {
-      data: [{ id: 1, name: "John Doe", status: "COMPLETED" }],
-      totalItems: 1,
-      totalPages: 1,
-      currentPage: 1,
-    },
+    data: [{ id: 1, name: "John Doe", status: "COMPLETED" }],
+    totalItems: 1,
+    totalPages: 1,
+    currentPage: 1,
   };
 
   beforeEach(() => {
-    // Mock axios.get
-    vi.mocked(axios.get).mockResolvedValue(mockData);
+    // Mock useFetch
+    (useFetch as ReturnType<typeof vi.fn>).mockImplementation(() => ({
+      data: mockData,
+      loading: false,
+      error: null,
+    }));
   });
 
   it("renders correctly", async () => {
     render(<PaginatedTableContainer />);
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-    await waitFor(() =>
-      expect(screen.getByText("John Doe")).toBeInTheDocument()
-    );
+    expect(screen.getByText("John Doe")).toBeInTheDocument();
   });
 
   it("fetches data on mount", async () => {
     render(<PaginatedTableContainer />);
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/data", {
-      params: { page: 1, limit: 20 },
-    });
+    await waitFor(() =>
+      expect(useFetch).toHaveBeenCalledWith("/data", "GET", {
+        params: { page: 1, limit: 20, search: "", status: "" },
+      })
+    );
   });
 
   it("handles status filter change", async () => {
@@ -48,11 +48,12 @@ describe("PaginatedTableContainer", () => {
       target: { value: "COMPLETED" },
     });
     await waitFor(() =>
-      expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/data", {
+      expect(useFetch).toHaveBeenCalledWith("/data", "GET", {
         params: expect.objectContaining({
           limit: 20,
           page: 1,
           status: "COMPLETED",
+          search: "",
         }),
       })
     );
@@ -68,7 +69,7 @@ describe("PaginatedTableContainer", () => {
       target: { value: "Jane" },
     });
     await waitFor(() =>
-      expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/data", {
+      expect(useFetch).toHaveBeenCalledWith("/data", "GET", {
         params: expect.objectContaining({
           limit: 20,
           page: 1,
@@ -79,30 +80,34 @@ describe("PaginatedTableContainer", () => {
   });
 
   it("displays error message on fetch failure", async () => {
-    vi.mocked(axios.get).mockResolvedValue(new Error("Failed to fetch data"));
+    (useFetch as ReturnType<typeof vi.fn>).mockImplementation(() => ({
+      data: null,
+      loading: false,
+      error: "Failed to fetch data",
+    }));
     render(<PaginatedTableContainer />);
     await waitFor(() =>
-      expect(
-        screen.getByText("Failed to fetch data. Please try again.")
-      ).toBeInTheDocument()
+      expect(screen.getByText("Failed to fetch data")).toBeInTheDocument()
     );
   });
 
   describe("Pagination", () => {
     const mockDataPages = {
-      data: {
-        data: [
-          { id: 1, name: "John Doe", status: "COMPLETED" },
-          { id: 1, name: "John Doe 2", status: "COMPLETED" },
-        ],
-        totalItems: 2,
-        totalPages: 2,
-        currentPage: 1,
-      },
+      data: [
+        { id: 1, name: "John Doe", status: "COMPLETED" },
+        { id: 2, name: "John Doe 2", status: "COMPLETED" },
+      ],
+      totalItems: 2,
+      totalPages: 2,
+      currentPage: 1,
     };
+
     beforeEach(() => {
-      // Mock axios.get
-      vi.mocked(axios.get).mockResolvedValue(mockDataPages);
+      (useFetch as ReturnType<typeof vi.fn>).mockImplementation(() => ({
+        data: mockDataPages,
+        loading: false,
+        error: null,
+      }));
     });
 
     it("handles page change", async () => {
@@ -113,7 +118,7 @@ describe("PaginatedTableContainer", () => {
 
       fireEvent.click(screen.getByText("Next Page"));
       await waitFor(() =>
-        expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/data", {
+        expect(useFetch).toHaveBeenCalledWith("/data", "GET", {
           params: expect.objectContaining({
             limit: 20,
             page: 2,

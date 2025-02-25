@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import Filters from "../Filters";
 import { describe, it, expect, vi } from "vitest";
