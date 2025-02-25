@@ -38,19 +38,29 @@ The `useFetch` hook is a custom hook designed to handle data fetching with suppo
 
 To improve Cumulative Layout Shift (CLS) in the web application, several strategies have been implemented:
 
-- **Skeleton Loaders**: Placeholder skeleton loaders are used to provide a visual indication of the table's structure before the actual data is loaded.
+- **Loading skeleton spinner**: Placeholder skeleton spinner are used to provide a visual loading indication.
 - **Fixed Layouts**: Explicit widths and heights are set for table cells to ensure a stable and predictable layout.
-- **Font Loading**: The `font-display: swap` property is used to ensure that fallback fonts are displayed immediately, and custom fonts are swapped in once they are loaded.
+- **Font Loading**: The `font-display: swap` property is used to ensure that fallback fonts are displayed immediately, and custom fonts are swapped in once they are loaded. Additionally, fonts are preloaded to ensure they are loaded as quickly as possible.
+
+<img width="363" alt="Captura de pantalla 2025-02-25 a las 15 51 42" src="https://github.com/user-attachments/assets/5fe8e92a-a264-4e77-b3ec-bea50ec35747" />
 
 #### React Strict Mode
 
-In development mode, React Strict Mode is enabled, which intentionally double-invokes certain lifecycle methods and effects to help identify potential issues. This can result in components making two requests during development, but this behavior does not occur in production.
+In development mode, React Strict Mode is enabled, which intentionally double-invokes certain lifecycle methods and effects to help identify potential issues. This can result in components making two requests during development, but this behavior does not occur in production. You can try it on you own building and executing server and web with the following commands:
+
+```sh
+npm run start
+```
+
+```sh
+npm run preview
+```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20 or higher)
 - npm or yarn
 
 ### Running the Application
@@ -151,6 +161,8 @@ In development mode, React Strict Mode is enabled, which intentionally double-in
 - Vite is used as the build tool for the frontend for faster development and build times.
 - Axios is used for making HTTP requests from both the server and the client.
 - A caching system is implemented on the server to optimize performance by reducing the number of requests to the remote endpoint.
+  - Not cached request time: <img width="912" alt="Captura de pantalla 2025-02-25 a las 13 50 20" src="https://github.com/user-attachments/assets/62046c44-d27e-487e-8447-843a02fe3f5d" />
+  - Cached request time: <img width="907" alt="Captura de pantalla 2025-02-25 a las 13 50 37" src="https://github.com/user-attachments/assets/032f903d-c146-47cf-a2ae-7c98a3ad64b5" />
 
 ### Trade-offs
 
