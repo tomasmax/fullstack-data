@@ -1,9 +1,8 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import DataListTable from "../DataListTable";
 import { describe, it, expect } from "vitest";
 import "@testing-library/jest-dom";
-import { Data } from "../config";
+import { Data } from "../../../types/data";
 
 const mockData: Data[] = [
   {
