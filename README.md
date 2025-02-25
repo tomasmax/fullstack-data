@@ -24,9 +24,27 @@ The server-side application is structured as follows:
 
 The client-side application is structured as follows:
 
-- **Components**: These are the building blocks of the UI
+- **Components**: These are the building blocks of the UI.
 
-- **Containers**: These manage the state and logic of the Paginated and filtered data table. See [`PaginatedTableContainer`](web/src/containers/PaginatedTableContainer/PaginatedTableContainer.tsx).
+- **Containers**: These manage the state and logic of the paginated and filtered data table. See [`PaginatedTableContainer`](web/src/containers/PaginatedTableContainer/PaginatedTableContainer.tsx).
+
+- **Hooks**: Custom hooks to encapsulate reusable logic. See [`useFetch`](web/src/hooks/useFetch.tsx).
+
+#### Custom `useFetch` Hook
+
+The `useFetch` hook is a custom hook designed to handle data fetching with support for loading and error states. It uses `axiosInstance` to make HTTP requests and manages the request lifecycle, including cancellation on component unmount. This hook simplifies data fetching in components and ensures a consistent approach across the application.
+
+#### CLS Improvements
+
+To improve Cumulative Layout Shift (CLS) in the web application, several strategies have been implemented:
+
+- **Skeleton Loaders**: Placeholder skeleton loaders are used to provide a visual indication of the table's structure before the actual data is loaded.
+- **Fixed Layouts**: Explicit widths and heights are set for table cells to ensure a stable and predictable layout.
+- **Font Loading**: The `font-display: swap` property is used to ensure that fallback fonts are displayed immediately, and custom fonts are swapped in once they are loaded.
+
+#### React Strict Mode
+
+In development mode, React Strict Mode is enabled, which intentionally double-invokes certain lifecycle methods and effects to help identify potential issues. This can result in components making two requests during development, but this behavior does not occur in production.
 
 ## Getting Started
 
